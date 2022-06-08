@@ -43,12 +43,3 @@ public class BankApp extends Account{
         sc.close();
     }
 }
-/**
- * To do:
- * Finish bank App
- *  functionalities should be
- *      Withdraw/deposit
- *      open/close account
- *          must withdraw all funds before closing
-
- */
