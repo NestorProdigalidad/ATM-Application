@@ -1,4 +1,4 @@
-# Bank-Application
+# ATM-Application
 An app that performs bank functions. The app takes inputs from the user and outputs the outcome based on its functions in the terminal. Technologies used for this project are Java and Visual Studio Code.
 
 #### Functions
