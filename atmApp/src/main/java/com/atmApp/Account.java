@@ -1,23 +1,22 @@
-package com.bankapp;
-import java.util.UUID;
-import java.text.DecimalFormat;
+package com.atmApp;
 /**
  * This is the Account class.
  * The standard functions of interacting with an account will be here
  */
-public class Account {
+public class Account extends Database{
     private double balance;
-    private UUID id;
+    private int id;
     private String name;
-    private static final DecimalFormat df = new DecimalFormat("0.00");
+    private String pinNumber;
     /**
      * Default constructor for Account 
      * Initializes variables
      */
     public Account(){
         this.balance = 0;
-        this.id = UUID.randomUUID();
+        this.id = 0;
         this.name = "";
+        this.pinNumber = "0000";
     }
     /**
      * Account constructor
@@ -26,10 +25,14 @@ public class Account {
      * Initializes account balance to 0.
      * @param name
      */
-    public Account(String name){
+    public Account(String name, String pinNumber){
         this.balance = 0;
-        this.id = UUID.randomUUID();
+        this.id = (int) (Math.random() * 10);
         this.name = name;
+
+        this.pinNumber = pinNumber;
+
+        newAccount(this.name, (int) this.balance, this.id, this.pinNumber);
     }
     /**
      * Copy constructor for Account
@@ -78,7 +81,7 @@ public class Account {
      * returns the @param UUID of the account
      * @return this.id
      */
-    UUID getId(){
+    int getId(){
         return this.id;
     }
     /**

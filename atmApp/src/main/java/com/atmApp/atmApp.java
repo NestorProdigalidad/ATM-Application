@@ -1,14 +1,19 @@
-package com.bankapp;
+package com.atmApp;
 import java.util.Scanner;
-import java.util.ArrayList;
+import javax.swing.*;
+
 /**
  * This class the main BankApp class.
  * How it works:
  * create an account, withdraw, deposit.
  */
-public class BankApp extends Account{
+public class atmApp extends Account{
     
     public static void main(String[] args) {
+        JFrame atmUI = new JFrame("ATM");
+        atmUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        atmUI.setSize(300,300);
+        atmUI.setVisible(true);
         Scanner sc = new Scanner(System.in);
         //ArrayList<Account> accountArray = new ArrayList<Account>();
         int bankFunction = 0;

@@ -1,4 +1,4 @@
-package com.bankapp;
+package com.atmApp;
 
 import static org.junit.Assert.assertTrue;
 
