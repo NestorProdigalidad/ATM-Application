@@ -32,7 +32,7 @@ public class Account extends Database{
 
         this.pinNumber = pinNumber;
 
-        newAccount(this.name, (int) this.balance, this.id, this.pinNumber);
+        newAccount(this);
     }
     /**
      * Copy constructor for Account

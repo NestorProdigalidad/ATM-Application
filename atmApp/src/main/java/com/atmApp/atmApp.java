@@ -13,8 +13,6 @@ import javax.swing.*;
  * create an account, withdraw, deposit.
  */
 public class atmApp extends Database implements ActionListener{
-    private static JTextField usernameField;
-    private static JPasswordField pinField;
     String loginPanel = "Login card";
     String atmPanel = "ATM card";
     String createAccountPanel = "Create Account card";
@@ -38,16 +36,35 @@ public class atmApp extends Database implements ActionListener{
 
     public void atmGUI(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(350,200);
 
-        //Login screen GUI card
+        //Adding All JPanels to the card Panel
+        cardPane.setLayout(card);
+        cardPane.add(loginScreen,loginPanel);
+        cardPane.add(createAccountScreen,createAccountPanel);
+        cardPane.add(atmScreen,atmPanel);
+        cardPane.add(transferScreen,transferPanel);
+        cardPane.add(transactionsScreen,transactionsPanel);
+        cardPane.add(successScreen,successPanel);
+        cardPane.add(withdrawScreen,withdrawPanel);
+        cardPane.add(depositScreen,depositPanel);
+
+        loginScreenGUI();
+        //Adding Card panel to main frame
+        frame.add(cardPane);
+        frame.setVisible(true);
+    }
+    public JPanel loginScreenGUI(){
+        frame.setSize(320,190);
         JLabel userName = new JLabel("Enter your Username: ");
         userName.setBounds(20,20,135,25);
-        usernameField = new JTextField();
+
+        JTextField usernameField = new JTextField();
         usernameField.setBounds(150,20,135,25);
+
         JLabel pinNumber = new JLabel("Enter your PIN: ");
         pinNumber.setBounds(60,50,135,25);
-        pinField = new JPasswordField();
+
+        JPasswordField pinField = new JPasswordField();
         pinField.setBounds(150,50,135,25);
 
         JButton loginButton = new JButton("Login");
@@ -65,8 +82,14 @@ public class atmApp extends Database implements ActionListener{
         loginScreen.add(loginButton);
         loginScreen.add(createAccountButton);
         loginScreen.setLayout(null);
+        card.show(cardPane,loginPanel);
+        return loginScreen;
 
+    }
+    public JPanel atmMainScreenGUI(){
         //atm main screen GUI
+        frame.setSize(500,300);
+        card.show(atmScreen,atmPanel);
         JLabel welcomeNameLabel = new JLabel("Welcome");
         welcomeNameLabel.setBounds(50,20,70, 25);
 
@@ -87,30 +110,46 @@ public class atmApp extends Database implements ActionListener{
         atmScreen.add(transactionHistoryButton);
         atmScreen.add(logoutButton);
         atmScreen.setLayout(null);
-
+        return atmScreen;
+    }
+    public JPanel createAccountScreenGUI(){
         //createAccount Screen GUI
+        frame.setSize(350,180);
         JLabel createAccountLabel = new JLabel("Create account");
+        createAccountLabel.setBounds(10,10,100,25);
 
-        createAccountLabel.setBounds(10,50,50,25);
-        JLabel nameLabel = new JLabel("Name:");
-        nameLabel.setBounds(10,40,20,25);
-        JTextField nameTextField = new JTextField("Enter your name...");
-        nameTextField.setBounds(35,40,40,25);
-        JLabel pinLabel = new JLabel("Create a Pin:");
+        JLabel nameLabel = new JLabel("Enter your Name:");
+        nameLabel.setBounds(60,40,100,25);
+
+        JTextField nameTextField = new JTextField("");
+        nameTextField.setBounds(170,40,150,25);
+
+        JLabel pinLabel = new JLabel("Enter a Pin:");
+        pinLabel.setBounds(95, 70,100,25);
+
         JPasswordField pinField = new JPasswordField();
+        pinField.setBounds(170,70,150,25);
+
         JButton createButton = new JButton("Create");
         createButton.addActionListener(this);
+        createButton.setBounds(220,105,100,25);
+
         createAccountScreen.add(createAccountLabel);
         createAccountScreen.add(nameLabel);
         createAccountScreen.add(nameTextField);
         createAccountScreen.add(pinLabel);
         createAccountScreen.add(pinField);
         createAccountScreen.add(createButton);
+        createAccountScreen.setLayout(null);
+        card.show(cardPane,createAccountPanel);
 
+        return createAccountScreen;
+    }
+    public JPanel transfersScreenGUI(){
         //transfer Screen GUI
+        frame.setSize(350,150);
         JLabel transferLabel = new JLabel("Transfers");
         transferLabel.setBounds(50,20,70, 25);
-
 
         JButton depositButton = new JButton("Deposit");
         depositButton.setBounds(50,50,70, 25);
@@ -126,8 +165,14 @@ public class atmApp extends Database implements ActionListener{
         transferScreen.add(transferLabel);
         transferScreen.add(depositButton);
         transferScreen.add(withdrawButton);
-
+        transferScreen.setLayout(null);
+        card.show(cardPane,transferPanel);
+        return transferScreen;
+    }
+    public JPanel depositScreenGUI(){
         //deposit screen GUI
+        frame.setSize(350,300);
+
         JLabel depositLabel = new JLabel("Deposit");
         depositLabel.setBounds(50,50,50,25);
         JLabel depositAmount = new JLabel("Amount:");
@@ -137,77 +182,81 @@ public class atmApp extends Database implements ActionListener{
         depositScreen.add(depositAmount);
         depositScreen.add(depositField);
         depositScreen.add(depositLabel);
-
-        //withdrawn screen GUI
-
-        //transaction history Screen GUI
-
-        //success Screen GUI
-
-        //Adding All JPanels to the card Panel
-        cardPane.setLayout(card);
-        cardPane.add(loginScreen,loginPanel);
-        cardPane.add(createAccountScreen,createAccountPanel);
-        cardPane.add(atmScreen,atmPanel);
-        cardPane.add(transferScreen,transferPanel);
-        cardPane.add(transactionsScreen,transactionsPanel);
-        cardPane.add(successScreen,successPanel);
-        cardPane.add(withdrawScreen,withdrawPanel);
-        cardPane.add(depositScreen,depositPanel);
-
-        //Adding Card panel to main frame
-        frame.add(cardPane);
-        frame.setVisible(true);
+        depositScreen.setLayout(null);
+        card.show(cardPane,depositPanel);
+        return depositScreen;
+    }
+    public JPanel TransactionScreenGUI(){
+        card.show(cardPane,transactionsPanel);
+        return transactionsScreen;
+    }
+    public JPanel withdrawScreenGUI(){
+        card.show(cardPane,withdrawPanel);
+        return withdrawScreen;
+    }
+    public JPanel successScreenGUI(){
+        card.show(cardPane,successPanel);
+        return successScreen;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        String username = usernameField.getText();
-        String pinNum = String.valueOf(pinField.getPassword());
-        System.out.println(username+" "+ pinNum);
         String actionCommand = e.getActionCommand();
         switch(actionCommand){
             case "Login":
                 /**
                  *
                  if(login is authenticated){
-                    show atm screen and resize window
+                 show atm screen and resize window
                  }
                  else{
                  Add login Failed message
                  }
                  */
+                break;
             case "Create Account":
                 /**
                  * Show create screen and resize window
                  * Then show Atm screen after creation
                  */
-                frame.setSize(500, 300);
-                card.show(cardPane,createAccountPanel);
+                createAccountScreenGUI();
+                break;
 
             case "Create":
                 /**
                  * creates Account with a name and pin
                  */
 
+                break;
+
             case "Transfers":
                 /**
                  * Show transfers screen
                  */
+                break;
+            case "Deposit":
+                depositScreenGUI();
+                break;
 
             case "Transaction history":
                 /**
                  * Show accounts transaction history
                  */
+                break;
 
             case "Back":
                 /**
                  * show previous screen
                  */
+                break;
 
             case "Logout":
                 /**
                  * Show login screen and resize window
                  */
+                break;
+
+            default:
+                break;
         }
     }
 
