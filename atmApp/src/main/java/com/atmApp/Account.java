@@ -8,6 +8,7 @@ public class Account extends Database{
     private int id;
     private String name;
     private String pinNumber;
+    private transactionHistory transactionHistory;
     /**
      * Default constructor for Account 
      * Initializes variables
@@ -17,6 +18,7 @@ public class Account extends Database{
         this.id = 0;
         this.name = "";
         this.pinNumber = "0000";
+        this.transactionHistory = new transactionHistory(this);
     }
     /**
      * Account constructor
@@ -29,9 +31,8 @@ public class Account extends Database{
         this.balance = 0;
         this.id = (int) (Math.random() * 10);
         this.name = name;
-
         this.pinNumber = pinNumber;
-
+        this.transactionHistory = new transactionHistory(this);
         newAccount(this);
     }
     /**
@@ -44,13 +45,23 @@ public class Account extends Database{
         this.id = account.id;
         this.name = account.name;
     }
+    public Account getAccount(int id){
+        Database account= new Database();
+        return account.accountDatabase.get(id);
+    }
+    /**
+     * Returns transaction history for the corresponding account.
+     * @return transactionHistory
+     */
+    public transactionHistory getTransactionHistory() {
+        return this.transactionHistory;
+    }
     /**
      * getBalance method
      * Returns the balance of the account
      * @return this.balance
      */
     double getBalance(){
-        //df.format(this.balance);
         return this.balance;
     }
     /**
@@ -60,14 +71,14 @@ public class Account extends Database{
      */
     void deposit(double depositAmount){
         this.balance += depositAmount;
-        System.out.println("Deposit complete. $" + depositAmount + " has been deposited into your account.");
+        this.transactionHistory.depositTransaction(depositAmount,this.balance);
     }
     /**
      * Withdraw method
      */
     void withdraw(double withdrawAmount){
         this.balance = getBalance() - withdrawAmount;
-        System.out.println("Withdrawal was complete. $" +withdrawAmount + " was withdrawn from your account.");
+        this.transactionHistory.withdrawTransaction(withdrawAmount,this.balance);
     }
     /**
      * getName method
@@ -84,12 +95,4 @@ public class Account extends Database{
     int getId(){
         return this.id;
     }
-    /**
-     * Name setter method
-     * Assigns @param name to objects name value
-     */
-    void setName(String name){
-        this.name = name;
-    }
-    
 }

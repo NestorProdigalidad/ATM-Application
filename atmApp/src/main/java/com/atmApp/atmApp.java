@@ -21,7 +21,6 @@ public class atmApp extends Database implements ActionListener{
     String depositPanel = "Deposit card";
     String withdrawPanel = "withdraw card";
     String transactionsPanel = "Transactions card";
-    //String comboBoxElements[] = {loginPanel,atmPanel,createAccountPanel,successPanel,transferPanel,depositPanel,withdrawPanel,transactionsPanel};
     JFrame frame = new JFrame("ATM");
     JPanel cardPane = new JPanel();
     JPanel loginScreen = new JPanel();
@@ -33,6 +32,9 @@ public class atmApp extends Database implements ActionListener{
     JPanel withdrawScreen = new JPanel();
     JPanel transactionsScreen = new JPanel();
     CardLayout card = new CardLayout();
+    Account account = new Account();
+    JTextField loginUsernameField, createNameField,depositField,withdrawField;
+    JPasswordField loginPinField,createPinField;
 
     public void atmGUI(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,14 +60,14 @@ public class atmApp extends Database implements ActionListener{
         JLabel userName = new JLabel("Enter your Username: ");
         userName.setBounds(20,20,135,25);
 
-        JTextField usernameField = new JTextField();
-        usernameField.setBounds(150,20,135,25);
+        loginUsernameField = new JTextField();
+        loginUsernameField.setBounds(150,20,135,25);
 
         JLabel pinNumber = new JLabel("Enter your PIN: ");
         pinNumber.setBounds(60,50,135,25);
 
-        JPasswordField pinField = new JPasswordField();
-        pinField.setBounds(150,50,135,25);
+        loginPinField = new JPasswordField();
+        loginPinField.setBounds(150,50,135,25);
 
         JButton loginButton = new JButton("Login");
         loginButton.setBounds(215,80,69,25);
@@ -76,9 +78,9 @@ public class atmApp extends Database implements ActionListener{
         createAccountButton.addActionListener(this);
 
         loginScreen.add(userName);
-        loginScreen.add(usernameField);
+        loginScreen.add(loginUsernameField);
         loginScreen.add(pinNumber);
-        loginScreen.add(pinField);
+        loginScreen.add(loginPinField);
         loginScreen.add(loginButton);
         loginScreen.add(createAccountButton);
         loginScreen.setLayout(null);
@@ -121,14 +123,14 @@ public class atmApp extends Database implements ActionListener{
         JLabel nameLabel = new JLabel("Enter your Name:");
         nameLabel.setBounds(60,40,100,25);
 
-        JTextField nameTextField = new JTextField("");
-        nameTextField.setBounds(170,40,150,25);
+        createNameField = new JTextField("");
+        createNameField.setBounds(170,40,150,25);
 
         JLabel pinLabel = new JLabel("Enter a Pin:");
         pinLabel.setBounds(95, 70,100,25);
 
-        JPasswordField pinField = new JPasswordField();
-        pinField.setBounds(170,70,150,25);
+        createPinField = new JPasswordField();
+        createPinField.setBounds(170,70,150,25);
 
         JButton createButton = new JButton("Create");
         createButton.addActionListener(this);
@@ -136,9 +138,9 @@ public class atmApp extends Database implements ActionListener{
 
         createAccountScreen.add(createAccountLabel);
         createAccountScreen.add(nameLabel);
-        createAccountScreen.add(nameTextField);
+        createAccountScreen.add(createNameField);
         createAccountScreen.add(pinLabel);
-        createAccountScreen.add(pinField);
+        createAccountScreen.add(createPinField);
         createAccountScreen.add(createButton);
         createAccountScreen.setLayout(null);
         card.show(cardPane,createAccountPanel);
@@ -175,10 +177,13 @@ public class atmApp extends Database implements ActionListener{
 
         JLabel depositLabel = new JLabel("Deposit");
         depositLabel.setBounds(50,50,50,25);
+
         JLabel depositAmount = new JLabel("Amount:");
         depositAmount.setBounds(50,80,50,25);
-        JTextField depositField = new JTextField("Enter deposit amount...");
+
+        depositField = new JTextField("Enter deposit amount...");
         depositField.setBounds(110,80,75,25);
+
         depositScreen.add(depositAmount);
         depositScreen.add(depositField);
         depositScreen.add(depositLabel);
@@ -197,6 +202,9 @@ public class atmApp extends Database implements ActionListener{
     public JPanel successScreenGUI(){
         card.show(cardPane,successPanel);
         return successScreen;
+    }
+    public Account loginVerification(JTextField loginUser,JPasswordField loginPin){
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
