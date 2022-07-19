@@ -2,9 +2,6 @@ package com.atmApp;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Scanner;
 import javax.swing.*;
 
 /**
@@ -205,6 +202,8 @@ public class atmApp extends Database implements ActionListener{
     }
     public Account loginVerification(JTextField loginUser,JPasswordField loginPin){
 
+        account = account.getAccount(Integer.parseInt(loginUser.getText()));
+        return account;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -220,6 +219,13 @@ public class atmApp extends Database implements ActionListener{
                  Add login Failed message
                  }
                  */
+                try{
+                    loginVerification(loginUsernameField,loginPinField);
+                }
+                catch (Exception a){
+                    JFrame errorFrame = new JFrame();
+                    JOptionPane.showMessageDialog(errorFrame,"Account not in database, please create an account.");
+                }
                 break;
             case "Create Account":
                 /**
@@ -233,7 +239,8 @@ public class atmApp extends Database implements ActionListener{
                 /**
                  * creates Account with a name and pin
                  */
-
+                account = new Account(createNameField.getText(),createPinField.getText());
+                System.out.println(account.getName());
                 break;
 
             case "Transfers":

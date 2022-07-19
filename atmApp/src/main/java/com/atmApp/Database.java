@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 public class Database {
     HashMap<Integer,Account> accountDatabase = new HashMap<Integer,Account>();
-
-    transactionHistory transactionHistory;
     public Database(){
     }
 

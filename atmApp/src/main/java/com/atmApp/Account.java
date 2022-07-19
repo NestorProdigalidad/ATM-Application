@@ -18,7 +18,7 @@ public class Account extends Database{
         this.id = 0;
         this.name = "";
         this.pinNumber = "0000";
-        this.transactionHistory = new transactionHistory(this);
+        this.transactionHistory = null;
     }
     /**
      * Account constructor
@@ -27,11 +27,11 @@ public class Account extends Database{
      * Initializes account balance to 0.
      * @param name
      */
-    public Account(String name, String pinNumber){
+    public Account(String name, String pin){
         this.balance = 0;
         this.id = (int) (Math.random() * 10);
         this.name = name;
-        this.pinNumber = pinNumber;
+        this.pinNumber = pin;
         this.transactionHistory = new transactionHistory(this);
         newAccount(this);
     }
