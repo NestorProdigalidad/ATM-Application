@@ -13,7 +13,7 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorkbook;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class transactionHistory extends Account{
+public class transactionHistory{
     private XSSFWorkbook transactionHistoryDatabase = new XSSFWorkbook();
     private XSSFSheet accountHistory;
     private XSSFRow row;

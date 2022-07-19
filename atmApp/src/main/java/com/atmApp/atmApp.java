@@ -32,6 +32,7 @@ public class atmApp extends Database implements ActionListener{
     Account account = new Account();
     JTextField loginUsernameField, createNameField,depositField,withdrawField;
     JPasswordField loginPinField,createPinField;
+    Database atmDatabase = new Database();
 
     public void atmGUI(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -188,7 +189,7 @@ public class atmApp extends Database implements ActionListener{
         card.show(cardPane,depositPanel);
         return depositScreen;
     }
-    public JPanel TransactionScreenGUI(){
+    public JPanel transactionScreenGUI(){
         card.show(cardPane,transactionsPanel);
         return transactionsScreen;
     }
@@ -202,7 +203,7 @@ public class atmApp extends Database implements ActionListener{
     }
     public Account loginVerification(JTextField loginUser,JPasswordField loginPin){
 
-        account = account.getAccount(Integer.parseInt(loginUser.getText()));
+        account = atmDatabase.accountDatabase.get(Integer.parseInt(String.valueOf(loginUser)));
         return account;
     }
     @Override
@@ -210,17 +211,10 @@ public class atmApp extends Database implements ActionListener{
         String actionCommand = e.getActionCommand();
         switch(actionCommand){
             case "Login":
-                /**
-                 *
-                 if(login is authenticated){
-                 show atm screen and resize window
-                 }
-                 else{
-                 Add login Failed message
-                 }
-                 */
                 try{
                     loginVerification(loginUsernameField,loginPinField);
+                    System.out.println(loginVerification(loginUsernameField,loginPinField).getName());
+                    atmMainScreenGUI();
                 }
                 catch (Exception a){
                     JFrame errorFrame = new JFrame();
@@ -240,22 +234,27 @@ public class atmApp extends Database implements ActionListener{
                  * creates Account with a name and pin
                  */
                 account = new Account(createNameField.getText(),createPinField.getText());
-                System.out.println(account.getName());
+                atmDatabase.newAccount(account);
+                System.out.println(account.getName()+" "+account.getId());
                 break;
 
             case "Transfers":
                 /**
                  * Show transfers screen
                  */
+                transfersScreenGUI();
                 break;
             case "Deposit":
                 depositScreenGUI();
                 break;
-
+            case "Withdraw":
+                withdrawScreenGUI();
+                break;
             case "Transaction history":
                 /**
                  * Show accounts transaction history
                  */
+                transactionScreenGUI();
                 break;
 
             case "Back":
@@ -268,6 +267,7 @@ public class atmApp extends Database implements ActionListener{
                 /**
                  * Show login screen and resize window
                  */
+                loginScreenGUI();
                 break;
 
             default:
