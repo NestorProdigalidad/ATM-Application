@@ -59,6 +59,7 @@ public class atmApp extends Database implements ActionListener{
         userName.setBounds(20,20,135,25);
 
         loginUsernameField = new JTextField();
+        System.out.println(loginUsernameField.getText());
         loginUsernameField.setBounds(150,20,135,25);
 
         JLabel pinNumber = new JLabel("Enter your PIN: ");
@@ -89,7 +90,7 @@ public class atmApp extends Database implements ActionListener{
     public JPanel atmMainScreenGUI(){
         //atm main screen GUI
         frame.setSize(500,300);
-        card.show(atmScreen,atmPanel);
+        card.show(cardPane,atmPanel);
         JLabel welcomeNameLabel = new JLabel("Welcome");
         welcomeNameLabel.setBounds(50,20,70, 25);
 
@@ -202,24 +203,26 @@ public class atmApp extends Database implements ActionListener{
         return successScreen;
     }
     public Account loginVerification(JTextField loginUser,JPasswordField loginPin){
-
-        account = atmDatabase.accountDatabase.get(Integer.parseInt(String.valueOf(loginUser)));
+        String id= loginUser.getText();
+        System.out.println(id);
+        int idNum = Integer.parseInt(id);
+        account = atmDatabase.accountDatabase.get(idNum);
         return account;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        JFrame errorFrame = new JFrame();
         String actionCommand = e.getActionCommand();
         switch(actionCommand){
             case "Login":
-                try{
-                    loginVerification(loginUsernameField,loginPinField);
-                    System.out.println(loginVerification(loginUsernameField,loginPinField).getName());
+                account = loginVerification(loginUsernameField, loginPinField);
+                if(account !=null) {
+                    System.out.println(account.getName());
                     atmMainScreenGUI();
-                }
-                catch (Exception a){
-                    JFrame errorFrame = new JFrame();
+                } else{
                     JOptionPane.showMessageDialog(errorFrame,"Account not in database, please create an account.");
                 }
+
                 break;
             case "Create Account":
                 /**
@@ -233,9 +236,11 @@ public class atmApp extends Database implements ActionListener{
                 /**
                  * creates Account with a name and pin
                  */
-                account = new Account(createNameField.getText(),createPinField.getText());
+                account = new Account(createNameField.getText(),String.valueOf(createPinField.getPassword()));
                 atmDatabase.newAccount(account);
+                JOptionPane.showMessageDialog(errorFrame,"Your Login credentials are:\n User: "+account.getId()+"\n Don't forget your PIN.");
                 System.out.println(account.getName()+" "+account.getId());
+                atmMainScreenGUI();
                 break;
 
             case "Transfers":
@@ -267,6 +272,9 @@ public class atmApp extends Database implements ActionListener{
                 /**
                  * Show login screen and resize window
                  */
+                account = new Account();
+                loginUsernameField.setText("");
+                loginPinField.setText("");
                 loginScreenGUI();
                 break;
 
@@ -278,5 +286,6 @@ public class atmApp extends Database implements ActionListener{
     public static void main(String[] args) {
         atmApp atm = new atmApp();
         atm.atmGUI();
+        //atm.accountDatabase.put();
     }
 }
